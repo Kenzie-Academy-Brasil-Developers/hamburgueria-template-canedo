@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Logo from "../../assets/Logo.svg";
 import { MdSearch, MdShoppingCart } from "react-icons/md";
+import { CartModal } from "../CartModal";
 
-export const Header = () => {
+
+export const Header = ({ favoriteList }) => {
    const [value, setValue] = useState("");
+   const [isOpen, setIsOpen] = useState(false)
+   const [favoriteCount, setFavoriteCount] = useState(0);
+   
+
+   useEffect(() => {
+      setFavoriteCount(favoriteList.length);
+   }, [favoriteList]);
 
    return (
       <header>
          <img src={Logo} alt="Logo Kenzie Burguer" />
          <div>
-            <button>
+            <button onClick={() => setIsOpen(true)}>
                 <MdShoppingCart size={21} />
-                <span>0</span>
+                <span>{favoriteCount}</span>
             </button>
             <form>
                <input
@@ -24,6 +33,7 @@ export const Header = () => {
                </button>
             </form>
          </div>
+         {isOpen ? <CartModal setIsOpen={setIsOpen} cartList={[]} /> : null}
       </header>
    );
 };
