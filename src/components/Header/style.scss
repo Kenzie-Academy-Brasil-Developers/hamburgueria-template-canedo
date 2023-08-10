@@ -1,0 +1,84 @@
+
+.containerHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 10%;
+  background: var(--color-grey1);
+
+  img{
+    width: 150px;
+    height: 22.852px;
+  }
+  div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .buttonCart{
+      display: flex;
+      flex-direction: column-reverse;
+      position: relative;
+      width: 36px;
+      height: 39px;
+      color: var(--color-grey3);
+      border: none;
+
+      span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 18px;
+        height: 20px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border-radius: 7px;
+        background: var(--color-primary);
+        color: var(--color-white);
+        font-weight: 700;
+      }
+    }
+    
+    form{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 365px;
+      height: 60px;
+      padding: 0px 10px 0px 15px;
+      border: 2px solid black;
+      border-radius: 8px;
+      border: 2px solid var(--color-grey2);
+      background: var(--color-white);
+    
+      input{
+        height: 40px;
+        border: none;
+        font-family: var(--font-family);
+        font-size: 16px;
+        font-weight: 400;
+      }
+      input::placeholder{
+        color: var(--color-grey2);
+      }
+
+      button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 8px;
+        border: none;
+        border: 2px solid var(--color-primary);
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+
+  }
+}
+
+

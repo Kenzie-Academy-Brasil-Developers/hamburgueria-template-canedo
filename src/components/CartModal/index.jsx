@@ -1,40 +1,48 @@
 import { MdClose } from "react-icons/md";
 import { CartItemCard } from "./CartItemCard";
-import { useState, useEffect } from "react";
+import "./style.scss"
 
 
-export const CartModal = ({ cartList, setIsOpen }) => {
-   const [favoriteProducts, setFavoriteProducts] = useState([]);
+export const CartModal = ({ cartList, setCartList, isOpen, setIsOpen }) => {
    const total = cartList.reduce((prevValue, product) => {
       return prevValue + product.price;
    }, 0);
 
+   
+   const handleRemoveAll = () => {
+      setCartList([])
+   };
 
-
+   const handleRemoveItem = (productId) => {
+      const updatedCart = cartList.filter(item => item.id !== productId);
+      setCartList(updatedCart)
+   };
    
 
    return (
-      <div role="dialog">
-         <div>
-            <h2>Carrinho de compras</h2>
-            <button aria-label="close" title="Fechar"  onClick={() => setIsOpen(false)}>
-               <MdClose size={21} />
-            </button>
-         </div>
-         <div>
-            <ul>
-               {cartList.map((product) => (
-                  <CartItemCard key={product.id} product={product} />
-               ))}
-            </ul>
-         </div>
-         <div>
-            <div>
-               <span>Total</span>
-               <span>{total.toLocaleString('pt-BR', { style: "currency", currency: "BRL"})}</span>
+      <section className={`modalOverlay ${isOpen ? "" : "modalHidden"}`}>
+         <div role="dialog" className="containerModal">
+            <div className="modalBox modalText1">
+               <h2>Carrinho de compras</h2>
+               <button className="closeButton" aria-label="close" title="Fechar"  onClick={() => setIsOpen(false)}>
+                  <MdClose size={21} />
+               </button>
             </div>
-            <button>Remover todos</button>
+            <div>
+               <ul>
+                  {cartList.map((product) => (
+                     <CartItemCard key={product.id} product={product} onRemoveClick={handleRemoveItem}/>
+                     ))}
+               </ul>
+            </div>
+            <div className="divAllValue">
+               <div >
+                  <span className="modalText3">Total</span>
+                  <span className="modalText4">{total.toLocaleString('pt-BR', { style: "currency", currency: "BRL"})}</span>
+               </div>
+               <button className="modalText2" onClick={handleRemoveAll}>Remover todos</button>
+            </div>
          </div>
-      </div>
+      </section>
    );
 };

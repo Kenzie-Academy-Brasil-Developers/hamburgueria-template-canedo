@@ -1,0 +1,29 @@
+
+li{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--color-grey1);
+  border-radius: 5px;
+
+  div{
+    display: flex;
+    gap: 10px; 
+
+    img{
+      width: 82.259px;
+      height: 80px;
+      border-radius: 5px;
+      background: var(--color-grey2);
+    }
+  }
+
+  button{
+    width: 14px;
+    height: 14px;
+    border: none;
+    color: var(--color-grey5);
+    background-color: transparent;
+    margin-right: 10px;
+  }
+}

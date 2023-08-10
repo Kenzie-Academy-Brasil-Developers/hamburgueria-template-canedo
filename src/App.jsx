@@ -14,7 +14,6 @@ function App() {
   const addFavorite = (addingfavorite) => {
     if (!favoriteList.some((favorite) => favorite.id === addingfavorite.id)) {
       setFavoriteList([...favoriteList, addingfavorite]);
-      //Toast - função que dispara o toast
       toast.success("Favorito adicionado com sucesso.");
     } else {
       toast.error("Favorito já adicionado");

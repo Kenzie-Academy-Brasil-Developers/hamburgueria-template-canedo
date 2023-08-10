@@ -1,30 +1,36 @@
 import { useState, useEffect} from "react";
 import Logo from "../../assets/Logo.svg";
 import { MdSearch, MdShoppingCart } from "react-icons/md";
-import { CartModal } from "../CartModal";
+import "./style.scss"
 
 
-export const Header = ({ favoriteList }) => {
-   const [value, setValue] = useState("");
-   const [isOpen, setIsOpen] = useState(false)
-   const [favoriteCount, setFavoriteCount] = useState(0);
-   
+export const Header = ({ favoriteList, setIsOpen, productList, setFilteredProductList }) => {
+   const [value, setValue] = useState("")
+   const [favoriteCount, setFavoriteCount] = useState(0)
 
    useEffect(() => {
-      setFavoriteCount(favoriteList.length);
-   }, [favoriteList]);
+      setFavoriteCount(favoriteList.length)
+   }, [favoriteList])
+
+   useEffect(() => {
+      const filteredProducts = productList.filter(product =>
+         product.name.toLowerCase().includes(value.toLowerCase())
+      )
+      setFilteredProductList(filteredProducts)
+   }, [productList, value, setFilteredProductList])
 
    return (
-      <header>
+      <header className="containerHeader">
          <img src={Logo} alt="Logo Kenzie Burguer" />
          <div>
-            <button onClick={() => setIsOpen(true)}>
+            <button className="buttonCart" onClick={() => setIsOpen(true)}>
                 <MdShoppingCart size={21} />
                 <span>{favoriteCount}</span>
             </button>
-            <form>
+            <form >
                <input
                   type="text"
+                  placeholder="Digitar Pesquisa"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                />
@@ -33,7 +39,6 @@ export const Header = ({ favoriteList }) => {
                </button>
             </form>
          </div>
-         {isOpen ? <CartModal setIsOpen={setIsOpen} cartList={[]} /> : null}
       </header>
    );
 };

@@ -10,12 +10,10 @@ export const HomePage = () => {
    const [productList, setProductList] = useState([]);
    const [cartList, setCartList] = useState([]);
    const [favoriteList, setFavoriteList] = useState([]);
+   const [isOpen, setIsOpen] = useState(false)
+   const [filteredProductList, setFilteredProductList] = useState([]);
 
 
-
-   //"iniciar o componente"
-    //Isso só aconteça na montagem
-    // useEffect montagem - carrega os produtos da API e joga em productList
     useEffect(() => {
       const getProducts = async () => {
           try {
@@ -29,23 +27,37 @@ export const HomePage = () => {
   }, []); 
 
 
-   const handleFavoriteClick = (productId) => {
-      // Verifica se o item já está na lista de favoritos
+  const handleFavoriteClick = (productId) => {
       if (!favoriteList.includes(productId)) {
          const newFavoriteList = [...favoriteList, productId];
          setFavoriteList(newFavoriteList);
          localStorage.setItem("@FavoriteList", JSON.stringify(newFavoriteList));
-          
       }
+   };
+
+   const handleAddToCart = (productId) => {
+      const productToAdd = productList.find(product => product.id === productId);
+      const isProductInCart = cartList.some(item => item.id === productId);
+
+      if (productToAdd && !isProductInCart) {
+         setCartList([...cartList, productToAdd]);
+      }
+   };
+
+   const handleSearch = (searchValue) => {
+      const filteredProducts = productList.filter(product =>
+         product.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setProductList(filteredProducts);
    };
 
 
    return (
       <>
-         <Header favoriteList={favoriteList}/>
+          <Header favoriteList={favoriteList} setIsOpen={setIsOpen} productList={productList} handleSearch={handleSearch}  setFilteredProductList={setFilteredProductList}/>
          <main>
-            <ProductList productList={productList} handleFavoriteClick={handleFavoriteClick}/>
-            {/* <CartModal cartList={cartList} /> */}
+            <ProductList productList={filteredProductList}  handleFavoriteClick={handleFavoriteClick} handleAddToCart={handleAddToCart}/>
+            <CartModal cartList={cartList} setCartList={setCartList} isOpen={isOpen} setIsOpen={setIsOpen}/>
          </main>
       </>
    );
